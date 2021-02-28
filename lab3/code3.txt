@@ -1,0 +1,40 @@
+SELECT * FROM books WHERE b_price = NULL OR b_price = 0.00
+
+SELECT * FROM books WHERE (NOT b_price = NULL) AND b_circulation = NULL
+
+SELECT * FROM books WHERE b_data = NULL
+
+SELECT * FROM books WHERE Year(CURRENT_DATE) - (b_data)<= 1
+
+SELECT * FROM books WHERE b_new = 'YES' ORDER BY b_price ASC
+
+SELECT * FROM books WHERE b_pages BETWEEN 300 AND 400 ORDER BY b_title DESC
+
+SELECT * FROM books WHERE b_price BETWEEN 30 AND 40 ORDER BY b_data DESC
+
+SELECT * FROM books ORDER BY b_title ASC, b_price DESC
+
+SELECT * FROM books WHERE (b_price*27.90)/CAST(b_pages AS FLOAT)<0.10
+
+SELECT LENGTH(b_title) AS 'Число символів в назві', UPPER(LEFT(b_title, 20)) AS 'Перші 20 символів назви' FROM 'books'
+
+SELECT UPPER(CONCAT(LEFT(b_title, 10), '...', RIGHT(b_title, 10))) AS `перші 10 і останні 10 символів назви прописними буквами, розділені '...'` FROM `books`
+
+SELECT b_title AS `Назва`, b_data AS `Дата`, DAYNAME(b_data) AS `День`, MONTHNAME(b_data) AS `Місяць`, YEAR(b_data) AS `Рік` FROM `books`
+
+SELECT b_title AS `Назва`, b_data AS `Дата`, DATE_FORMAT(b_data, '%d/%m/%Y') AS `дата в форматі 'dd / mm / yyyy'` FROM books
+
+SELECT b_code AS `Код`, b_price `Ціна`, b_price*27.90 AS `Ціна в грн`, b_price*0.82 AS `Ціна в євро`, b_price*74.16 AS `Ціна в руб` FROM books
+
+SELECT b_code AS `Код`, b_price `Ціна`, TRUNCATE(b_price*27.90, 0) AS `Ціна в грн без копійок`, ROUND(b_price*27.90, 0) AS `Ціна в грн округлена` FROM books
+
+INSERT INTO books (`b_id`, `b_code`, `b_new`, `b_title`, `b_publishing`, `b_pages`, `b_format`, `b_data`, `b_circulation`, `b_topic`, `b_category`) VALUE (339, 138, 'Yes', 'Harry Potter and the Half Blood pince', 10.50, 'Bloomsbury', 228, NULL, '2007-08-17', 15000, 'Світ магії', 'Фентезі')
+
+INSERT INTO books (`b_id`, `b_code`, `b_title`, `b_price`, `b_publishing`) VALUES (339, 1337, 'Harry Potter and Philosofers stone', 15.99, 'Bloomsbury')
+
+DELETE FROM books WHERE YEAR(b_data)<1990
+
+UPDATE books SET `b_data` = CURRENT_DATE WHERE b_data = NULL
+
+UPDATE books SET `b_new` = 'Yes' WHERE YEAR(b_data) >= 2005
+
