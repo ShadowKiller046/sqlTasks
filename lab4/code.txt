@@ -1,0 +1,39 @@
+SELECT COUNT(b_title) AS `books`, COUNT(b_price) AS `price`, AVG(b_price) AS `c_price`, MAX(b_price) AS `max_price`, MIN(b_price) AS `min_price` FROM books
+
+SELECT b_title FROM books WHERE b_price IS NULL
+
+SELECT b_title, COUNT(b_title) AS `загальна кількість книг`, SUM(b_price) `загальна вартість`, AVG(b_price) AS `середня вартість`, MIN(b_price) AS `мін вартість`, MAX(b_price) AS `макс вартість`, b_new FROM books GROUP BY b_new
+
+SELECT b_title, COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), YEAR(b_data) FROM books GROUP BY YEAR(b_data)
+
+SELECT b_title, COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), YEAR(b_data) FROM books WHERE b_price NOT BETWEEN 10 AND 20 GROUP BY YEAR(b_data)
+
+SELECT b_title, COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), YEAR(b_data) FROM books GROUP BY YEAR(b_data) ORDER BY COUNT(b_price) DESC
+
+SELECT COUNT(b_id), COUNT(DISTINCT b_id) FROM books
+
+SELECT LEFT(b_title, 1), COUNT(b_title), SUM(b_price) FROM books GROUP BY LEFT(b_title,1)
+
+SELECT LEFT(b_title, 1), COUNT(b_title), SUM(b_price) FROM books WHERE NOT LEFT(b_title,1) REGEXP '[A-Za-z0-9]' GROUP BY LEFT(b_title,1)
+
+SELECT LEFT(b_title, 1), COUNT(b_title), SUM(b_price) FROM books WHERE NOT LEFT(b_title,1) REGEXP '[A-Za-z0-9]' AND YEAR(b_data)>2000 GROUP BY LEFT(b_title,1)
+
+SELECT LEFT(b_title, 1), COUNT(b_title), SUM(b_price) FROM books WHERE NOT LEFT(b_title,1) REGEXP '[A-Za-z0-9]' AND YEAR(b_data)>2000 GROUP BY LEFT(b_title,1) ORDER BY LEFT(b_title, 1) DESC
+
+SELECT b_title, MONTHNAME(b_data), YEAR(b_data), COUNT(b_price), COUNT(b_title), MIN(b_price), MAX(b_price), AVG(b_price), SUM(b_price) FROM books GROUP BY MONTHNAME(b_data) AND YEAR(b_data)
+
+SELECT b_title, MONTHNAME(b_data), YEAR(b_data), COUNT(b_price), COUNT(b_title), MIN(b_price), MAX(b_price), AVG(b_price), SUM(b_price) FROM books GROUP BY MONTHNAME(b_data) AND YEAR(b_data) ASC
+
+SELECT b_title, MONTHNAME(b_data), YEAR(b_data), COUNT(b_price), COUNT(b_title), MIN(b_price), MAX(b_price), AVG(b_price), SUM(b_price) FROM books GROUP BY MONTHNAME(b_data) ASC, YEAR(b_data) DESC
+
+SELECT b_title, b_new AS `new`, SUM(b_price) AS `загальна вартість`, SUM(b_price *27.95) AS `вартість в грн`, SUM(b_price * 0.83) AS `вартість в евро`, SUM(b_price * 76.22) FROM books GROUP BY b_new
+
+SELECT b_title, b_new AS `new`, ROUND(SUM(b_price)) AS `загальна вартість`, ROUND(SUM(b_price *27.95)) AS `вартість в грн`, ROUND(SUM(b_price * 0.83)) AS `вартість в евро`, ROUND(SUM(b_price * 76.22)) FROM books GROUP BY b_new
+
+SELECT COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), b_publishing FROM books GROUP BY b_publishing
+
+SELECT COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), b_publishing, b_topic FROM books GROUP BY b_publishing, b_topic
+
+SELECT COUNT(b_title), SUM(b_price), AVG(b_price), MIN(b_price), MAX(b_price), b_publishing, b_topic, b_category FROM books GROUP BY b_publishing, b_topic, b_category
+
+SELECT b_publishing AS `Видавництво`, ROUND(b_price * 27.95 / CAST(b_pages AS FLOAT), 0) AS `Ціна однієї сторінки` FROM books WHERE ROUND(b_price * 27.95 / CAST(b_pages AS FLOAT), 0)>0.10
